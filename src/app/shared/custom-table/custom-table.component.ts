@@ -51,6 +51,8 @@ export class CustomTableComponent implements AfterViewInit {
   );
   @Output() sortEvent: EventEmitter<Sort> = new EventEmitter();
   @Output() pageEvent: EventEmitter<PageEvent> = new EventEmitter();
+  @Output() editRow = new EventEmitter<any>();
+  @Output() deleteRow = new EventEmitter<any>();
 
   public clickedRows = new Set<any>();
 

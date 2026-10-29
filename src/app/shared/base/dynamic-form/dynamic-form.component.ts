@@ -17,6 +17,8 @@ export class DynamicFormComponent implements OnInit {
 
   @Output()
   cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output()
+  submitted = new EventEmitter<Record<string, unknown>>();
 
   constructor(private qcs: QuestionControlService) {}
 
@@ -25,7 +27,11 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.payLoad = JSON.stringify(this.form.getRawValue());
+    if (this.form.valid) {
+      const values = this.form.getRawValue() as Record<string, unknown>;
+      this.payLoad = JSON.stringify(values);
+      this.submitted.emit(values);
+    }
   }
 
   onCancel() {

@@ -29,4 +29,5 @@
 <ang23-dynamic-form
   [questions]="questions$ | async"
   (cancel)="onNoClick()"
+  (submitted)="onSave($event)"
 ></ang23-dynamic-form>

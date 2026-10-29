@@ -42,4 +42,8 @@ export class BaseEditFormComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  onSave(values: Record<string, unknown>): void {
+    this.dialogRef.close({ ...this.data, ...values } as User);
+  }
 }

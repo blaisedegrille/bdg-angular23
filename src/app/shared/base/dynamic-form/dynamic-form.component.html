@@ -16,13 +16,14 @@
       <div class="form-row" style="gap: 5%; display: flex">
         <button
           mat-raised-button
+          type="button"
           (click)="onSubmit()"
           color="primary"
           [disabled]="!form.valid"
           >
           Save
         </button>
-        <button mat-raised-button color="accent" (click)="onCancel()">
+        <button mat-raised-button type="button" color="accent" (click)="onCancel()">
           Cancel
         </button>
       </div>

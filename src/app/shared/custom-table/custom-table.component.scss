@@ -19,20 +19,23 @@
 
 .custom-table .mat-column-select,
 .custom-table .mat-column-action {
-  width: 52px;
+  width: 48px;
 }
 
 .custom-table .mat-column-id {
-  width: 64px;
+  width: 72px;
 }
 
 .custom-table .mat-column-name {
-  width: 25%;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  width: 24%;
 }
 
 .custom-table .mat-column-email {
   overflow-wrap: anywhere;
   white-space: normal;
+  width: 42%;
 }
 
 .custom-table .mat-mdc-cell,
@@ -47,6 +50,10 @@
   overflow-wrap: anywhere;
   text-overflow: clip;
   white-space: normal;
+}
+
+.custom-table .mat-column-action.mat-mdc-cell {
+  padding-inline: 4px;
 }
 
 .custom-table .mat-mdc-row:nth-child(even) {
@@ -75,4 +82,20 @@
 
 mat-paginator {
   border-radius: 0 0 12px 12px;
+}
+
+@media (max-width: 600px) {
+  .custom-table .mat-column-select,
+  .custom-table .mat-column-action {
+    width: 44px;
+  }
+
+  .custom-table .mat-column-id {
+    width: 56px;
+  }
+
+  .custom-table .mat-mdc-cell,
+  .custom-table .mat-mdc-header-cell {
+    padding-inline: 8px;
+  }
 }
