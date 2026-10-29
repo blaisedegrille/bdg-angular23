@@ -4,7 +4,8 @@
 @import "../node_modules/@swimlane/ngx-datatable/themes/material.scss";
 @import "./styles/theme_variables";
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 /*
 $my-primary: mat.define-palette(mat.$purple-palette, 500);
