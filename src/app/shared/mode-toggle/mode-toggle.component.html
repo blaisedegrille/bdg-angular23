@@ -1,7 +1,7 @@
 <button
   mat-icon-button
-  class="example-icon"
-  aria-label="Example icon-button with share icon"
+  class="mode-toggle-button"
+  [attr.aria-label]="icon_name === 'dark_mode' ? 'Switch to dark mode' : 'Switch to light mode'"
   (click)="toggle()"
 >
   <mat-icon>{{ icon_name }}</mat-icon>

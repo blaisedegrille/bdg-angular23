@@ -1,0 +1,17 @@
+.mode-toggle-button {
+  border-radius: 12px;
+  color: inherit;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.mode-toggle-button:hover {
+  background-color: rgb(255 255 255 / 12%);
+  transform: rotate(-8deg);
+}
+
+.mode-toggle-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

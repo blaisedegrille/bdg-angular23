@@ -1,95 +1,206 @@
 .app-navbar {
+  inset: 0 0 auto;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  margin-bottom: 50px;
+  z-index: 5;
 }
 
-.app-logo-title {
-  cursor: pointer;
-  margin: auto;
-  display: contents;
+.app-toolbar {
+  background: linear-gradient(
+    110deg,
+    var(--mat-sys-primary),
+    color-mix(in srgb, var(--mat-sys-primary) 82%, var(--mat-sys-tertiary))
+  );
+  box-shadow: 0 4px 18px rgb(27 19 42 / 16%);
+  color: var(--mat-sys-on-primary);
+  gap: 12px;
+  height: 68px;
+  padding-inline: clamp(12px, 2vw, 28px);
 }
 
-// teljes app
-.example-container {
-  height: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  padding-top: 64px;
-  display: block;
-  overflow-y: hidden;
+.menu-button {
+  flex: 0 0 auto;
 }
 
-.mat-list-item {
-  padding: 0;
+.app-brand {
+  align-items: center;
+  color: inherit;
+  display: inline-flex;
+  gap: 11px;
+  min-width: 0;
+  text-decoration: none;
 }
 
-::ng-deep .mat-drawer-container {
-  background-color: unset !important;
-  overflow-y: hidden;
+.app-brand img {
+  background: rgb(255 255 255 / 14%);
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 11px;
+  height: 38px;
+  object-fit: contain;
+  padding: 3px;
+  width: 38px;
 }
 
-.example-sidenav-content {
-  width: 100%;
-  height: fit-content;
-  //  background: linear-gradient(to bottom, #ffffff 0%, #9c27b0 100%);
+.brand-title {
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
-.example-sidenav {
-  padding-top: 64px;
+.brand-tag {
+  border: 1px solid rgb(255 255 255 / 32%);
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  opacity: 0.86;
+  padding: 5px 7px;
 }
 
-.example-spacer {
+.toolbar-spacer {
   flex: 1 1 auto;
 }
 
-//buttons
-
-section {
-  display: table;
+.github-link {
+  border-radius: 999px;
+  gap: 6px;
 }
 
-.example-label {
-  display: table-cell;
-  font-size: 14px;
-  margin-left: 8px;
-  min-width: 120px;
+.app-shell {
+  background: transparent;
+  border: 0;
+  box-sizing: border-box;
+  height: 100%;
+  padding-top: 68px;
 }
 
-.example-button-row {
-  display: table-cell;
-
-  max-width: 600px;
+.app-shell > ng-scrollbar {
+  display: block;
+  height: 100%;
 }
 
-.example-button-row .mat-mdc-button-base {
-  margin: 8px 8px 8px 0;
-}
-
-.example-flex-container {
+.app-drawer {
+  background: var(--mat-sys-surface-container-low);
+  border: 0;
+  border-radius: 0 20px 20px 0;
+  box-shadow: 6px 0 24px rgb(25 18 38 / 7%);
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  max-width: 84vw;
+  padding: 20px 12px 14px;
+  width: 264px;
 }
 
-.example-button-container {
+.drawer-heading {
+  display: grid;
+  gap: 5px;
+  padding: 8px 12px 18px;
+}
+
+.drawer-kicker {
+  color: var(--mat-sys-primary);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+}
+
+.drawer-caption {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 13px;
+}
+
+.app-nav-list {
+  display: grid;
+  gap: 4px;
+}
+
+.app-nav-list a[mat-list-item] {
+  border-radius: 13px;
+  color: var(--mat-sys-on-surface-variant);
+  min-height: 48px;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.app-nav-list a[mat-list-item]:hover {
+  background: var(--mat-sys-surface-container-high);
+  color: var(--mat-sys-on-surface);
+}
+
+.app-nav-list a[mat-list-item].active-nav {
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+  font-weight: 650;
+}
+
+.app-nav-list a[mat-list-item].active-nav mat-icon {
+  color: var(--mat-sys-primary);
+}
+
+.drawer-footer {
+  align-items: center;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  color: var(--mat-sys-on-surface-variant);
   display: flex;
-  justify-content: center;
-  width: 120px;
+  font-size: 12px;
+  gap: 9px;
+  margin-top: auto;
+  padding: 16px 12px 4px;
 }
 
-.github-logo {
-  margin-top: 6px;
-  margin-right: 6px;
+.drawer-footer mat-icon {
+  color: var(--mat-sys-tertiary);
+  font-size: 19px;
+  height: 19px;
+  width: 19px;
+}
+
+.app-content {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 12px clamp(10px, 1.4vw, 20px);
+  width: 100%;
 }
 
 ng-scrollbar {
   --scroll-padding-left: 2px;
   --scrollbar-size: 8px;
-  --scrollbar-thumb-color: rgb(199, 199, 199);
-  --scrollbar-hover-size: 12px;
-  --scrollbar-track-color: rgba(0, 0, 0, 0.05);
+  --scrollbar-thumb-color: color-mix(in srgb, var(--mat-sys-primary) 42%, transparent);
+  --scrollbar-hover-size: 11px;
+  --scrollbar-track-color: color-mix(in srgb, var(--mat-sys-on-surface) 5%, transparent);
   --scrollbar-border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+  .app-toolbar {
+    gap: 6px;
+    height: 60px;
+    padding-inline: 8px;
+  }
+
+  .app-shell {
+    padding-top: 60px;
+  }
+
+  .app-brand {
+    gap: 8px;
+  }
+
+  .app-brand img {
+    height: 34px;
+    width: 34px;
+  }
+
+  .brand-title {
+    font-size: 14px;
+  }
+
+  .brand-tag,
+  .github-link span {
+    display: none;
+  }
 }
