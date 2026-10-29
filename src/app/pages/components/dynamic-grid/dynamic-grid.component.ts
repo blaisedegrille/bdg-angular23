@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
+import { catchError, finalize } from 'rxjs';
 import { DisplayedColumns } from 'src/app/models/displayed-columns';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/service/user.service';
@@ -35,10 +35,10 @@ export class DynamicGridComponent implements OnInit {
   };
   public paginationSizes: number[] = [5, 10, 15];
   public defaultPageSize = this.paginationSizes[1];
-  public paginationLength: number = 0;
+  public paginationLength = 0;
   public pageIndex: number = 0;
   public loading = false;
-  public tableData!: User[];
+  public tableData: User[] = [];
   public pageEvent!: PageEvent;
   public sortState: Sort = {
     direction: '',
@@ -46,36 +46,35 @@ export class DynamicGridComponent implements OnInit {
   };
 
   constructor(
-    private readonly userService: UserService,
-    public dialog: MatDialog
+    private readonly userService: UserService
   ) {}
 
   public ngOnInit() {
-    console.log('DynamicGridComponent');
     this.getTableData();
-    //this.initFilters();
-    //this.handleFilterEvent();
   }
-  /*   initFilters() {
-    this.initFilterDropDowns();
-    this.initFilterForm();
-  } */
 
-  getTableData() {}
+  getTableData(): void {
+    this.loading = true;
+
+    this.userService
+      .get()
+      .pipe(
+        catchError(() => this.userService.getDefaultData()),
+        finalize(() => (this.loading = false))
+      )
+      .subscribe((users) => {
+        this.tableData = users;
+        this.paginationLength = users.length;
+      });
+  }
 
   handlePageEvent(event: PageEvent) {
-    this.loading = true;
-    console.log('EVAT LIST COMP: ', event);
     this.pageEvent = event;
     this.pageIndex = event.pageIndex;
     this.defaultPageSize = event.pageSize;
-    this.getTableData();
   }
 
   handleSortEvent(event: Sort) {
-    this.loading = true;
     this.sortState = event;
-    console.log('EvatListComponent sortEvent: ', event);
-    this.getTableData();
   }
 }

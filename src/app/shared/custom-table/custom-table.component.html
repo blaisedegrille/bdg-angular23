@@ -1,17 +1,6 @@
-<div style="margin-top: 15px; position: relative">
+<div class="table-container">
   @if (loading) {
-    <div
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.6);
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    "
-      >
+    <div class="table-loading" role="status" aria-label="Loading users">
       <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
       </mat-progress-spinner>
     </div>
@@ -21,7 +10,7 @@
     matSort
     [dataSource]="tableDataSource"
     (matSortChange)="announceSortChange($event)"
-    class="mat-elevation-z10"
+    class="custom-table mat-elevation-z2"
     >
     <!-- Selection Definition -->
     <ng-container matColumnDef="select">
@@ -46,84 +35,58 @@
     </td>
   </ng-container>
   <!-- Dynamic Definitions -->
-  @for (column of displayedColumns?.display; track column) {
-    <ng-container
-      [matColumnDef]="column.name"
-      >
+  @for (column of displayedColumns.display; track column.name) {
+    <ng-container [matColumnDef]="column.name">
       <th mat-header-cell mat-sort-header *matHeaderCellDef>
         {{ column.header }}
       </th>
-      @if (column.type === 'date') {
-        <td mat-cell *matCellDef="let row">
-          {{ row[column.name] | date }}
-        </td>
-      }
-      @if (column.type === 'monetary') {
-        <td mat-cell *matCellDef="let row">
-          {{ row[column.name] }}
-        </td>
-      }
-      @if (column.type === 'string') {
-        <td mat-cell *matCellDef="let row">
-          {{ row[column.name] }}
-        </td>
-      }
-      @if (column.type === 'number') {
-        <td mat-cell *matCellDef="let row">
-          {{ row[column.name] | number }}
-        </td>
-      }
+      <td mat-cell *matCellDef="let row">
+        @switch (column.type) {
+          @case ('date') {
+            {{ row[column.name] | date }}
+          }
+          @case ('number') {
+            {{ row[column.name] | number }}
+          }
+          @default {
+            {{ row[column.name] }}
+          }
+        }
+      </td>
     </ng-container>
   }
 
-  <!-- Id Definition -->
-  <!--       <ng-container matColumnDef="id">
-  <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-  <mat-cell *matCellDef="let row"> {{ row.id }} </mat-cell>
-</ng-container> -->
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let row">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Row actions">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu"></mat-menu>
+    </td>
+  </ng-container>
 
-<!-- Name Definition -->
-<!--       <ng-container matColumnDef="name">
-<mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-<mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
-</ng-container> -->
-
-<!-- Email Definition -->
-<!--       <ng-container matColumnDef="email">
-<mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-<mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
-</ng-container> -->
-
-<!-- Action Definition -->
-<ng-container matColumnDef="action">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
-  <td mat-cell *matCellDef="let row">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <!--           <button mat-menu-item (click)="openDialog(selection.selected)">
-      Módosítás
-    </button>
-    <button mat-menu-item (click)="removeHandler(selection.selected)">
-      Törlés
-    </button> -->
-  </mat-menu>
-</td>
-</ng-container>
-<!-- Header and Row Declarations -->
-<tr mat-header-row *matHeaderRowDef="displayedColumns.columns"></tr>
-<tr
-  mat-row
-  class="table-row"
-  (click)="$event.stopPropagation(); onRowChange(row)"
-  [class.demo-row-is-clicked]="clickedRows.has(row)"
-  *matRowDef="let row; let even = even; columns: displayedColumns.columns"
-  [ngClass]="{ gray: even }"
-></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns.columns"></tr>
+  <tr
+    mat-row
+    class="table-row"
+    (click)="onRowChange(row)"
+    [class.demo-row-is-clicked]="clickedRows.has(row)"
+    *matRowDef="let row; let even = even; columns: displayedColumns.columns"
+    [ngClass]="{ gray: even }"
+  ></tr>
+  <tr *matNoDataRow>
+    <td class="mat-mdc-cell no-data-cell" [attr.colspan]="displayedColumns.columns.length">
+      @if (loading) {
+        Loading users…
+      } @else {
+        No users to display.
+      }
+    </td>
+  </tr>
 </table>
 <mat-paginator
-  class="mat-elevation-z10"
+  class="mat-elevation-z2"
   [pageSizeOptions]="paginationSizes"
   [pageSize]="defaultPageSize"
   [length]="paginationLength"
@@ -134,11 +97,3 @@
   >
 </mat-paginator>
 </div>
-
-<!--
-<br />
-<br />
-<div>
-  <h3>Current selection</h3>
-  <span *ngIf="selection.selected.length">{{ selection.selected | json }}</span>
-</div>-->

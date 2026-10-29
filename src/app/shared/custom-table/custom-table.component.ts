@@ -1,17 +1,14 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import {
   MatPaginator,
-  MatPaginatorIntl,
   PageEvent,
 } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -24,22 +21,18 @@ import { DisplayedColumns } from 'src/app/models/displayed-columns';
   templateUrl: './custom-table.component.html',
   styleUrls: ['./custom-table.component.scss'],
 })
-export class CustomTableComponent implements OnInit, AfterViewInit {
-  public tableDataSource!: MatTableDataSource<any>;
+export class CustomTableComponent implements AfterViewInit {
+  public tableDataSource = new MatTableDataSource<any>([]);
 
   @Input()
-  public displayedColumns!: DisplayedColumns;
+  public displayedColumns: DisplayedColumns = { display: [], columns: [] };
 
-  /*   @ViewChild(MatPaginator) matPaginator: MatPaginator = new MatPaginator(
-    new MatPaginatorIntl(),
-    ChangeDetectorRef.prototype
-  ); */
   @ViewChild(MatPaginator, { static: false }) matPaginator!: MatPaginator;
 
   @ViewChild(MatSort) matSort!: MatSort;
 
-  @Input() set tableData(data: any[]) {
-    this.setTableDataSource(data);
+  @Input() set tableData(data: any[] | null | undefined) {
+    this.tableDataSource.data = data ?? [];
   }
   @Input() paginationSizes: number[] = [5, 10, 15];
   @Input() defaultPageSize = this.paginationSizes[1];
@@ -50,31 +43,22 @@ export class CustomTableComponent implements OnInit, AfterViewInit {
   @Input()
   pageIndex = 0;
 
+  public allowMultiSelect = true;
+  public initialSelection = [];
+  public selection: SelectionModel<any> = new SelectionModel<any>(
+    this.allowMultiSelect,
+    this.initialSelection
+  );
   @Output() sortEvent: EventEmitter<Sort> = new EventEmitter();
   @Output() pageEvent: EventEmitter<PageEvent> = new EventEmitter();
 
   public clickedRows = new Set<any>();
-  public selection: SelectionModel<any> = new SelectionModel<any>();
-  public initialSelection = [];
-  public allowMultiSelect = true;
 
   constructor() {}
 
-  ngOnInit(): void {}
   ngAfterViewInit(): void {
-    // this.tableDataSource.paginator = this.matPaginator;
     this.tableDataSource.sort = this.matSort;
-
-    this.selection = new SelectionModel<any>(
-      this.allowMultiSelect,
-      this.initialSelection
-    );
-  }
-
-  setTableDataSource(data: any) {
-    this.tableDataSource.sort = this.matSort;
-    this.tableDataSource = new MatTableDataSource<any>(data);
-    // this.tableDataSource.paginator = this.matPaginator;
+    this.tableDataSource.paginator = this.matPaginator;
   }
 
   handlePageEvent(event: PageEvent) {
