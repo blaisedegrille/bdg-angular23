@@ -19,6 +19,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DisplayedColumns } from 'src/app/models/displayed-columns';
 
 @Component({
+  standalone: false,
   selector: 'ang23-custom-table',
   templateUrl: './custom-table.component.html',
   styleUrls: ['./custom-table.component.scss'],

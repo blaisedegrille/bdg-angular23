@@ -1,12 +1,12 @@
 <ang23-custom-table
-  [displayedColumns]="displayedColumns"
+  [displayedColumns]="cols"
   [tableData]="tableData"
   [paginationSizes]="paginationSizes"
   [paginationLength]="paginationLength"
   [defaultPageSize]="defaultPageSize"
   [pageIndex]="pageIndex"
   [loading]="loading"
-  (pageEvent)="emitPageEvent($event)"
-  (sortEvent)="emitSortEvent($event)"
+  (pageEvent)="handlePageEvent($event)"
+  (sortEvent)="handleSortEvent($event)"
 >
 </ang23-custom-table>

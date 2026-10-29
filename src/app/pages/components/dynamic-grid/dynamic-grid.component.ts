@@ -7,6 +7,7 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
+  standalone: false,
   selector: 'ang23-dynamic-grid',
   templateUrl: './dynamic-grid.component.html',
   styleUrls: ['./dynamic-grid.component.scss'],
@@ -68,13 +69,13 @@ export class DynamicGridComponent implements OnInit {
     this.pageEvent = event;
     this.pageIndex = event.pageIndex;
     this.defaultPageSize = event.pageSize;
-    this.getTableData(this.castFilters(this.filters));
+    this.getTableData();
   }
 
   handleSortEvent(event: Sort) {
     this.loading = true;
     this.sortState = event;
     console.log('EvatListComponent sortEvent: ', event);
-    this.getTableData(this.castFilters(this.filters));
+    this.getTableData();
   }
 }

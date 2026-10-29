@@ -5,7 +5,7 @@
       class="example-icon"
       aria-label="Example icon-button with menu icon"
       (click)="drawer.toggle()"
-    >
+      >
       <mat-icon>menu</mat-icon>
     </button>
 
@@ -21,61 +21,62 @@
       class="docs-button docs-navbar-hide-small"
       href="https://github.com/blaisedegrille/angular-2023"
       aria-label="GitHub Repository"
-    >
+      >
       <img
         class="logo"
         matButtonIcon
         src="../assets/github-circle-white-transparent.svg"
         alt="angular"
         aria-hidden="true"
-      />
+        />
       <span style="color: white; padding-left: 5px"> GitHub </span>
     </a>
     <!--     <a
-      mat-icon-button
-      class="docs-button docs-navbar-show-small"
-      href="https://github.com/blaisedegrille/angular-2023"
-      aria-label="GitHub Repository"
+    mat-icon-button
+    class="docs-button docs-navbar-show-small"
+    href="https://github.com/blaisedegrille/angular-2023"
+    aria-label="GitHub Repository"
     >
-      <img
-        class="logo docs-navbar--github-logo"
-        matButtonIcon
-        src="../assets/github-circle-white-transparent.svg"
-        alt="angular"
-        aria-hidden="true"
+    <img
+      class="logo docs-navbar--github-logo"
+      matButtonIcon
+      src="../assets/github-circle-white-transparent.svg"
+      alt="angular"
+      aria-hidden="true"
       />
-    </a> -->
-    <!--     <button
-      mat-icon-button
-      class="example-icon favorite-icon"
-      aria-label="Example icon-button with heart icon"
-    >
-      <mat-icon>favorite</mat-icon>
-    </button> -->
-    <!--     <button
-      mat-icon-button
-      class="example-icon"
-      aria-label="Example icon-button with share icon"
-    >
-      <mat-icon>share</mat-icon>
-    </button> -->
-  </mat-toolbar>
+  </a> -->
+  <!--     <button
+  mat-icon-button
+  class="example-icon favorite-icon"
+  aria-label="Example icon-button with heart icon"
+  >
+  <mat-icon>favorite</mat-icon>
+</button> -->
+<!--     <button
+mat-icon-button
+class="example-icon"
+aria-label="Example icon-button with share icon"
+>
+<mat-icon>share</mat-icon>
+</button> -->
+</mat-toolbar>
 </nav>
 <!-- <ang23-header [title]="title"></ang23-header>
- -->
+-->
 <mat-drawer-container class="example-container" autosize>
   <mat-drawer #drawer class="example-sidenav" mode="side">
     <mat-nav-list #components>
-      <mat-list-item
-        *ngFor="let component of componentList"
-        [routerLink]="component.route"
-        >{{ component.name }}</mat-list-item
-      >
-    </mat-nav-list>
-  </mat-drawer>
-  <ng-scrollbar #scrollable track="all" pointerEventsMethod="scrollbar">
-    <div class="example-sidenav-content" style="padding-top: 10px">
-      <router-outlet></router-outlet>
-    </div>
-  </ng-scrollbar>
-</mat-drawer-container>
+      @for (component of componentList; track component) {
+        <mat-list-item
+          [routerLink]="component.route"
+          >{{ component.name }}</mat-list-item
+          >
+        }
+      </mat-nav-list>
+    </mat-drawer>
+    <ng-scrollbar #scrollable track="all" pointerEventsMethod="scrollbar">
+      <div class="example-sidenav-content" style="padding-top: 10px">
+        <router-outlet></router-outlet>
+      </div>
+    </ng-scrollbar>
+  </mat-drawer-container>

@@ -4,7 +4,6 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import {
   MatTable,
   MatTableDataSource,
-  MatTableDataSourcePaginator,
 } from '@angular/material/table';
 import { User } from 'src/app/models/user';
 import { UserJsonPlaceholder } from 'src/app/models/user-jsonplaceholder';
@@ -12,6 +11,7 @@ import { UserJsonPlaceholderService } from 'src/app/service/user-jsonplaceholder
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
+  standalone: false,
   selector: 'ang23-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],

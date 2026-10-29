@@ -1,30 +1,30 @@
-<div class="ang23-dialog" *ngIf="false">
-  <h1>Dynamic Edit form</h1>
-  <span>Dinamikusan generált form.</span>
-  <br />
-  <br />
-  <form [formGroup]="form" style="display: block">
-    <div style="width: 100%">
-      <mat-form-field appearance="outline" [style.width.%]="100">
-        <mat-label>Name</mat-label>
-        <input matInput [formControlName]="'name'" />
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <!-- <mat-hint>Hint</mat-hint> -->
-      </mat-form-field>
-    </div>
-
-    <div style="width: 100%">
-      <mat-form-field appearance="outline" [style.width.%]="100">
-        <mat-label>Email</mat-label>
-        <input matInput [formControlName]="'email'" />
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <!-- <mat-hint>Hint</mat-hint> -->
-      </mat-form-field>
-    </div>
-  </form>
-
-  <span>{{ data | json }}</span>
-</div>
+@if (false) {
+  <div class="ang23-dialog">
+    <h1>Dynamic Edit form</h1>
+    <span>Dinamikusan generált form.</span>
+    <br />
+    <br />
+    <form [formGroup]="form" style="display: block">
+      <div style="width: 100%">
+        <mat-form-field appearance="outline" [style.width.%]="100">
+          <mat-label>Name</mat-label>
+          <input matInput [formControlName]="'name'" />
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <!-- <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+      </div>
+      <div style="width: 100%">
+        <mat-form-field appearance="outline" [style.width.%]="100">
+          <mat-label>Email</mat-label>
+          <input matInput [formControlName]="'email'" />
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <!-- <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+      </div>
+    </form>
+    <span>{{ data | json }}</span>
+  </div>
+}
 
 <ang23-dynamic-form
   [questions]="questions$ | async"

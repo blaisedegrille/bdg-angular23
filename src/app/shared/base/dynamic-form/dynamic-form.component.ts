@@ -4,6 +4,7 @@ import { QuestionBase } from './question/question-base';
 import { QuestionControlService } from './question/question-control.service';
 
 @Component({
+  standalone: false,
   selector: 'ang23-dynamic-form',
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss'],

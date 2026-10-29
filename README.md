@@ -8,7 +8,7 @@
 
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![node](https://img.shields.io/badge/node-14.15.1-green)]()
+[![node](https://img.shields.io/badge/node-24.22.1-green)]()
 [![ngx--rocket](https://img.shields.io/badge/ngx--rocket-9.1.0-green)]()
 [![NET Core](https://img.shields.io/badge/.NETCore-3.1.0-green)]()
 </div>
@@ -33,11 +33,11 @@ docker-compose up --build -d
 
 # config
 
-Angular CLI: 16.2.3
-Node: 18.17.1
-Package Manager: npm 10.1.0
+Angular CLI: 21.2.29
+Node: 24.22.1
+Package Manager: npm 11.19.1
 OS: linux x64
-Angular: 16.2.6
+Angular: 21.2.25 (LTS)
 
 # angular-2023
 
@@ -45,7 +45,7 @@ rxjs, ngrx, material, bootstrap, design patterns, etc included
 
 # Angular2023
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 21.2.29.
 
 ## Development server
 

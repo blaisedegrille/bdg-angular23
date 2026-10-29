@@ -7,9 +7,11 @@
   <br />
 
   <mat-select [(ngModel)]="selectedValue">
-    <mat-option *ngFor="let valid of esValidoArr" [value]="valid.valor">
-      {{ valid.label }}
-    </mat-option>
+    @for (valid of esValidoArr; track valid) {
+      <mat-option [value]="valid.valor">
+        {{ valid.label }}
+      </mat-option>
+    }
   </mat-select>
   <br />
   <br />
@@ -21,7 +23,7 @@
         mat-raised-button
         color="primary"
         (click)="randomize()"
-      >
+        >
         Update
       </button>
     </div>
@@ -37,7 +39,7 @@
         [type]="barChartType"
         (chartHover)="chartHovered($event)"
         (chartClick)="chartClicked($event)"
-      >
+        >
       </canvas>
     </mat-card-content>
   </mat-card>

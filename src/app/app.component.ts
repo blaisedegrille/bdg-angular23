@@ -4,6 +4,7 @@ import { Mode } from './shared/mode-toggle/mode-toggle.model';
 import { ModeToggleService } from './shared/mode-toggle/mode-toggle.service';
 
 @Component({
+  standalone: false,
   selector: 'ang23-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

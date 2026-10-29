@@ -1,7 +1,7 @@
-import { QuestionNumeric } from './question-numeric';
+import { NumericQuestion } from './question-numeric';
 
-describe('QuestionNumeric', () => {
+describe('NumericQuestion', () => {
   it('should create an instance', () => {
-    expect(new QuestionNumeric()).toBeTruthy();
+    expect(new NumericQuestion()).toBeTruthy();
   });
 });

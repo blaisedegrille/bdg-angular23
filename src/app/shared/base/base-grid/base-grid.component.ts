@@ -11,6 +11,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
+  standalone: false,
   selector: 'ang23-base-grid',
   templateUrl: './base-grid.component.html',
   styleUrls: ['./base-grid.component.scss'],

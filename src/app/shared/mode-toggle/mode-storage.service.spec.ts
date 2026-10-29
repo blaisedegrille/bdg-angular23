@@ -1,13 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ModeStorageService } from './mode-storage.service';
+import { ModeLocalStorageService } from './mode-storage.service';
 
-describe('ModeStorageService', () => {
-  let service: ModeStorageService;
+describe('ModeLocalStorageService', () => {
+  let service: ModeLocalStorageService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ModeStorageService);
+    TestBed.configureTestingModule({
+      providers: [ModeLocalStorageService],
+    });
+    service = TestBed.inject(ModeLocalStorageService);
   });
 
   it('should be created', () => {
