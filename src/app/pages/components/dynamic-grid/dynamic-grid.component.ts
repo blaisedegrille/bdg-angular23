@@ -39,6 +39,8 @@ export class DynamicGridComponent implements OnInit {
   public pageIndex: number = 0;
   public loading = false;
   public tableData: User[] = [];
+  public allUsers: User[] = [];
+  public searchTerm = '';
   public pageEvent!: PageEvent;
   public sortState: Sort = {
     direction: '',
@@ -63,9 +65,25 @@ export class DynamicGridComponent implements OnInit {
         finalize(() => (this.loading = false))
       )
       .subscribe((users) => {
-        this.tableData = users;
-        this.paginationLength = users.length;
+        this.allUsers = users;
+        this.filterUsers();
       });
+  }
+
+  filterUsers(searchTerm = this.searchTerm): void {
+    this.searchTerm = searchTerm;
+    const query = this.searchTerm.trim().toLocaleLowerCase();
+
+    this.tableData = query
+      ? this.allUsers.filter((user) =>
+          [user.id.toString(), user.name, user.email].some((value) =>
+            value.toLocaleLowerCase().includes(query)
+          )
+        )
+      : [...this.allUsers];
+
+    this.paginationLength = this.tableData.length;
+    this.pageIndex = 0;
   }
 
   handlePageEvent(event: PageEvent) {

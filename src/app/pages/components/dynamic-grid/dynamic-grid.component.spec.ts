@@ -11,7 +11,10 @@ describe('DynamicGridComponent', () => {
   let component: DynamicGridComponent;
   let fixture: ComponentFixture<DynamicGridComponent>;
   let userService: jasmine.SpyObj<UserService>;
-  const apiUsers: User[] = [{ id: 1, name: 'API User', email: 'api@example.com' }];
+  const apiUsers: User[] = [
+    { id: 1, name: 'API User', email: 'api@example.com' },
+    { id: 2, name: 'Other User', email: 'other@example.com' },
+  ];
   const sampleUsers: User[] = [
     { id: 2, name: 'Sample User', email: 'sample@example.com' },
   ];
@@ -55,5 +58,23 @@ describe('DynamicGridComponent', () => {
     expect(component.tableData).toEqual(sampleUsers);
     expect(component.paginationLength).toBe(sampleUsers.length);
     expect(component.loading).toBeFalse();
+  });
+
+  it('filters by ID, name, and email, and restores rows when cleared', () => {
+    const searchInput: HTMLInputElement =
+      fixture.nativeElement.querySelector('input[type="search"]');
+    searchInput.value = 'OTHER@EXAMPLE.COM';
+    searchInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(component.tableData).toEqual([apiUsers[1]]);
+    expect(component.paginationLength).toBe(1);
+
+    searchInput.value = '';
+    searchInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(component.tableData).toEqual(apiUsers);
+    expect(component.paginationLength).toBe(apiUsers.length);
   });
 });

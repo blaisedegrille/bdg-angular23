@@ -13,8 +13,40 @@
   background: var(--mat-sys-surface-container-low, #fff);
   border-radius: 12px 12px 0 0;
   color: var(--mat-sys-on-surface, #202124);
-  min-width: 560px;
+  table-layout: fixed;
   width: 100%;
+}
+
+.custom-table .mat-column-select,
+.custom-table .mat-column-action {
+  width: 52px;
+}
+
+.custom-table .mat-column-id {
+  width: 64px;
+}
+
+.custom-table .mat-column-name {
+  width: 25%;
+}
+
+.custom-table .mat-column-email {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.custom-table .mat-mdc-cell,
+.custom-table .mat-mdc-header-cell {
+  box-sizing: border-box;
+  overflow: hidden;
+  padding-inline: 12px;
+  text-overflow: ellipsis;
+}
+
+.custom-table .mat-column-email.mat-mdc-cell {
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  white-space: normal;
 }
 
 .custom-table .mat-mdc-row:nth-child(even) {
