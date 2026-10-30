@@ -1,141 +1,113 @@
-<div style="margin-top: 15px; position: relative">
-  <div
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.6);
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    "
-    *ngIf="loading"
-  >
-    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
-    </mat-progress-spinner>
-  </div>
+<div class="table-container">
+  @if (loading) {
+    <div class="table-loading" role="status" aria-label="Loading users">
+      <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+      </mat-progress-spinner>
+    </div>
+  }
   <table
     mat-table
     matSort
     [dataSource]="tableDataSource"
     (matSortChange)="announceSortChange($event)"
-    class="mat-elevation-z10"
-  >
+    class="custom-table mat-elevation-z2"
+    >
     <!-- Selection Definition -->
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
-        <span *ngIf="allowMultiSelect">Kijelölés</span>
+        @if (allowMultiSelect) {
+          <span>Kijelölés</span>
+        }
         <!--         <mat-checkbox
-          *ngIf="allowMultiSelect"
-          (change)="$event ? toggleAllRows() : null"
-          [checked]="selection.hasValue() && isAllSelected()"
-          [indeterminate]="selection.hasValue() && !isAllSelected()"
+        *ngIf="allowMultiSelect"
+        (change)="$event ? toggleAllRows() : null"
+        [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()"
         >
-        </mat-checkbox> -->
-      </th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox
-          (click)="$event.stopPropagation(); onSelectionChange(row)"
-          [checked]="selection.isSelected(row)"
+      </mat-checkbox> -->
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox
+        (click)="$event.stopPropagation(); onSelectionChange(row)"
+        [checked]="selection.isSelected(row)"
         >
-        </mat-checkbox>
-      </td>
-    </ng-container>
-    <!-- Dynamic Definitions -->
-    <ng-container
-      *ngFor="let column of displayedColumns?.display; let index"
-      [matColumnDef]="column.name"
-    >
+      </mat-checkbox>
+    </td>
+  </ng-container>
+  <!-- Dynamic Definitions -->
+  @for (column of displayedColumns.display; track column.name) {
+    <ng-container [matColumnDef]="column.name">
       <th mat-header-cell mat-sort-header *matHeaderCellDef>
         {{ column.header }}
       </th>
-
-      <ng-container *ngIf="column.type === 'date'">
-        <td mat-cell *matCellDef="let row">
-          {{ row[column.name] | date }}
-        </td>
-      </ng-container>
-      <ng-container *ngIf="column.type === 'monetary'">
-        <td mat-cell *matCellDef="let row">
-          {{ row[column.name] }}
-        </td>
-      </ng-container>
-      <ng-container *ngIf="column.type === 'string'">
-        <td mat-cell *matCellDef="let row">
-          {{ row[column.name] }}
-        </td>
-      </ng-container>
-      <ng-container *ngIf="column.type === 'number'">
-        <td mat-cell *matCellDef="let row">
-          {{ row[column.name] | number }}
-        </td>
-      </ng-container>
-    </ng-container>
-
-    <!-- Id Definition -->
-    <!--       <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{ row.id }} </mat-cell>
-      </ng-container> -->
-
-    <!-- Name Definition -->
-    <!--       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
-      </ng-container> -->
-
-    <!-- Email Definition -->
-    <!--       <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
-      </ng-container> -->
-
-    <!-- Action Definition -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
       <td mat-cell *matCellDef="let row">
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <!--           <button mat-menu-item (click)="openDialog(selection.selected)">
-            Módosítás
-          </button>
-          <button mat-menu-item (click)="removeHandler(selection.selected)">
-            Törlés
-          </button> -->
-        </mat-menu>
+        @switch (column.type) {
+          @case ('date') {
+            {{ row[column.name] | date }}
+          }
+          @case ('number') {
+            {{ row[column.name] | number }}
+          }
+          @default {
+            {{ row[column.name] }}
+          }
+        }
       </td>
     </ng-container>
-    <!-- Header and Row Declarations -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns.columns"></tr>
-    <tr
-      mat-row
-      class="table-row"
-      (click)="$event.stopPropagation(); onRowChange(row)"
-      [class.demo-row-is-clicked]="clickedRows.has(row)"
-      *matRowDef="let row; let even = even; columns: displayedColumns.columns"
-      [ngClass]="{ gray: even }"
-    ></tr>
-  </table>
-  <mat-paginator
-    class="mat-elevation-z10"
-    [pageSizeOptions]="paginationSizes"
-    [pageSize]="defaultPageSize"
-    [length]="paginationLength"
-    [pageIndex]="pageIndex"
-    (page)="handlePageEvent($event)"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements"
-  >
-  </mat-paginator>
-</div>
+  }
 
-<!--
-<br />
-<br />
-<div>
-  <h3>Current selection</h3>
-  <span *ngIf="selection.selected.length">{{ selection.selected | json }}</span>
-</div>-->
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let row">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        [attr.aria-label]="'Actions for ' + row.name"
+        (click)="$event.stopPropagation()"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="editRow.emit(row)">
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="deleteRow.emit(row)">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns.columns"></tr>
+  <tr
+    mat-row
+    class="table-row"
+    (click)="onRowChange(row)"
+    [class.demo-row-is-clicked]="clickedRows.has(row)"
+    *matRowDef="let row; let even = even; columns: displayedColumns.columns"
+    [ngClass]="{ gray: even }"
+  ></tr>
+  <tr *matNoDataRow>
+    <td class="mat-mdc-cell no-data-cell" [attr.colspan]="displayedColumns.columns.length">
+      @if (loading) {
+        Loading users…
+      } @else {
+        No users to display.
+      }
+    </td>
+  </tr>
+</table>
+<mat-paginator
+  class="mat-elevation-z2"
+  [pageSizeOptions]="paginationSizes"
+  [pageSize]="defaultPageSize"
+  [length]="paginationLength"
+  [pageIndex]="pageIndex"
+  (page)="handlePageEvent($event)"
+  showFirstLastButtons
+  aria-label="Select page of periodic elements"
+  >
+</mat-paginator>
+</div>

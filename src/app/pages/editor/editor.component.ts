@@ -25,6 +25,7 @@ const config = {
 };
 
 @Component({
+  standalone: false,
   selector: 'ang23-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss'],

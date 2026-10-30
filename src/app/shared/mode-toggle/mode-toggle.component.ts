@@ -4,6 +4,7 @@ import { ModeLocalStorageService } from './mode-storage.service';
 import { Mode } from './mode-toggle.model';
 
 @Component({
+  standalone: false,
   selector: 'ang23-mode-toggle',
   templateUrl: './mode-toggle.component.html',
   styleUrls: ['./mode-toggle.component.scss'],

@@ -7,6 +7,7 @@ import { QuestionBase } from '../dynamic-form/question/question-base';
 import { QuestionService } from '../dynamic-form/question/question.service';
 
 @Component({
+  standalone: false,
   selector: 'ang23-base-edit-form',
   templateUrl: './base-edit-form.component.html',
   styleUrls: ['./base-edit-form.component.scss'],
@@ -40,5 +41,9 @@ export class BaseEditFormComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  onSave(values: Record<string, unknown>): void {
+    this.dialogRef.close({ ...this.data, ...values } as User);
   }
 }

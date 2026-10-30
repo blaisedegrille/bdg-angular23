@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
+  standalone: false,
   selector: 'ang23-base-maintenance',
   templateUrl: './base-maintenance.component.html',
   styleUrls: ['./base-maintenance.component.scss'],

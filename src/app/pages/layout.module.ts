@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
 import { UserComponent } from './components/user/user.component';
@@ -26,7 +27,7 @@ import { EditorComponent } from './editor/editor.component';
     DashboardComponent,
     EditorComponent,
   ],
-  imports: [CommonModule, SharedModule, NgChartsModule],
+  imports: [CommonModule, RouterModule, SharedModule, NgChartsModule],
   exports: [HeaderComponent],
 })
 export class LayoutModule {}

@@ -1,96 +1,58 @@
-/* You can add global styles to this file, and also import other style files */
-@use "@angular/material" as mat;
-
-@import "../node_modules/@swimlane/ngx-datatable/themes/material.scss";
-@import "./styles/theme_variables";
+@use '@angular/material' as mat;
+@use '../node_modules/@swimlane/ngx-datatable/themes/material' as ngx-datatable;
+@use './styles/theme_variables';
 
 @include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
-/*
-$my-primary: mat.define-palette(mat.$purple-palette, 500);
-$my-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
-*/
+// M3 theme palettes retain the existing purple/green branding.
+$light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$violet-palette,
+    tertiary: mat.$green-palette,
+    use-system-variables: true,
+  ),
+  density: (scale: 0),
+));
 
-$my-primary-purple: mat.define-palette(mat.$purple-palette, 500);
-$my-primary-green: mat.define-palette(mat.$green-palette, 500);
-$my-accent-purple: mat.define-palette(mat.$purple-palette, A200, A100, A400);
-$my-accent-green: mat.define-palette(mat.$green-palette, A200, A100, A400);
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$violet-palette,
+    tertiary: mat.$green-palette,
+    use-system-variables: true,
+  ),
+  density: (scale: 0),
+));
 
-$my-light-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $my-primary-purple,
-      accent: $my-accent-green,
-    ),
-    density: 0,
-  )
-);
-
-$my-light-button-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $my-accent-green,
-      accent: $my-primary-purple,
-    ),
-    density: 0,
-  )
-);
-
-$my-dark-theme: mat.define-dark-theme(
-  (
-    color: (
-      primary: $my-primary-purple,
-      accent: $my-accent-green,
-    ),
-    density: 0,
-  )
-);
-
-$my-dark-button-theme: mat.define-dark-theme(
-  (
-    color: (
-      primary: $my-accent-green,
-      accent: $my-primary-purple,
-    ),
-    density: 0,
-  )
-);
-
-// Emit theme-dependent styles for common features used across multiple components.
-// @include mat.all-component-themes($my-theme);
-//@include mat.core-theme($my-theme);
-//@include mat.button-theme($my-theme);
+html {
+  color-scheme: light;
+  @include mat.all-component-themes($light-theme);
+  @include mat.system-level-colors($light-theme);
+  @include mat.system-level-typography($light-theme);
+  @include mat.color-variants-backwards-compatibility($light-theme);
+}
 
 body.dark {
-  @include darken();
-  background: linear-gradient(to bottom, #9c27b0 10%, #303030 60%);
-}
-body.light {
-  @include lighten();
-  background: linear-gradient(to bottom, #ffffff 0%, #9c27b0 100%);
-}
-/*
-@media (prefers-color-scheme: light) {
-  // Use the `-color` mixins to only apply color styles without reapplying the same
-  // typography and density styles.
-  @include mat.all-component-themes($my-light-theme);
+  color-scheme: dark;
+  color: var(--mat-sys-on-surface, whitesmoke);
+  background: linear-gradient(to bottom, #5f00c0 10%, #202124 60%);
+  @include mat.all-component-colors($dark-theme);
+  @include mat.system-level-colors($dark-theme);
+  @include mat.color-variants-backwards-compatibility($dark-theme);
 }
 
-@media (prefers-color-scheme: dark) {
-  // Use the `-color` mixins to only apply color styles without reapplying the same
-  // typography and density styles.
-  @include mat.all-component-themes($my-dark-theme);
-} */
+body.light {
+  color-scheme: light;
+  color: var(--mat-sys-on-surface, #202124);
+  background: linear-gradient(to bottom, #ffffff 0%, #ecdcff 100%);
+}
 
 html,
 body {
   height: 100%;
-
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
-
-/* .container {
-  padding: 30px;
-}
- */

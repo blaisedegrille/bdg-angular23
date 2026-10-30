@@ -3,6 +3,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 import { Observable } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'ang23-datatable',
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.scss'],

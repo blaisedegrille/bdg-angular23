@@ -1,8 +1,10 @@
-<h1 mat-dialog-title>Tétel törlése</h1>
-<div mat-dialog-content>Biztosan törölni szeretné a tételt?</div>
+<h1 mat-dialog-title>Delete user?</h1>
+<div mat-dialog-content>
+  Are you sure you want to delete {{ data.name || 'this user' }}?
+</div>
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close color="accent">Nem</button>
-  <button mat-button mat-dialog-close cdkFocusInitial color="primary">
-    Igen
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="primary">
+    Delete
   </button>
 </div>

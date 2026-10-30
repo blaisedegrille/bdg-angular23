@@ -12,7 +12,7 @@ import { SampleComponent } from './sample/sample.component';
 import { LayoutModule } from './pages/layout.module';
 import { MaterialModule } from './shared/material.module';
 import { SharedModule } from './shared/shared.module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ModeToggleModule } from './shared/mode-toggle/mode-toggle.module';
@@ -47,12 +47,10 @@ const analytics = getAnalytics(app); */
 @NgModule({
   declarations: [AppComponent, SampleComponent],
   imports: [
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),
+    BrowserModule,
     AppRoutingModule,
     LayoutModule,
     SharedModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
     ModeToggleModule,
@@ -64,7 +62,11 @@ const analytics = getAnalytics(app); */
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     RouterModule,
   ],
-  providers: [],
+  providers: [
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

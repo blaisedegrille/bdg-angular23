@@ -9,6 +9,7 @@ import {
 } from 'src/app/shared/base/base-maintenance/base-maintenance.component';
 
 @Component({
+  standalone: false,
   selector: 'ang23-maintenance',
   templateUrl:
     '../../../shared/base/base-maintenance/base-maintenance.component.html',
@@ -21,7 +22,7 @@ export class MaintenanceComponent
 {
   constructor(private readonly dataService: DataService) {
     super();
-    super.service = dataService;
+    this.service = dataService;
   }
 
   public override ngOnInit() {

@@ -1,50 +1,15 @@
-// mixin that enables css variables in light mode
-@mixin lighten() {
-  @include mat.all-component-colors($my-light-theme);
-  @include mat.checkbox-theme($my-light-button-theme);
-
-  // @include mat.input
-  .ang23-container {
-    height: max-content;
-    overflow-y: hidden;
-    //     background: linear-gradient(to bottom, #ffffff 0%, #9c27b0 100%);
-
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .ang23-dialog {
-    height: 100%;
-    //background: linear-gradient(to bottom, #ffffff 0%, #9c27b0 100%);
-    padding: 30px;
-  }
-  .ang23-header {
-    padding-top: 25px;
-  }
+.ang23-container {
+  height: max-content;
+  overflow-y: hidden;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-// mixin that enables css variables in dark mode
-@mixin darken() {
-  @include mat.all-component-colors($my-dark-theme);
-  @include mat.button-theme($my-dark-button-theme);
-  @include mat.select-theme($my-dark-button-theme);
-  @include mat.option-theme($my-dark-button-theme);
-  @include mat.input-theme($my-dark-button-theme);
-  @include mat.form-field-theme($my-dark-button-theme);
+.ang23-dialog {
+  height: 100%;
+  padding: 30px;
+}
 
-  color: whitesmoke;
-  .ang23-container {
-    height: 100%;
-    overflow-y: hidden;
-    // background: linear-gradient(to bottom, #9c27b0 10%, #303030 60%);
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .ang23-dialog {
-    height: 100%;
-    //background: linear-gradient(to bottom, #ffffff 0%, #9c27b0 100%);
-    padding: 30px;
-  }
-  .ang23-header {
-    padding-top: 25px;
-  }
+.ang23-header {
+  padding-top: 25px;
 }

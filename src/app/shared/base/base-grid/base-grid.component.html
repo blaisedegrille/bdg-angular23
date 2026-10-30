@@ -4,168 +4,169 @@
     <span
       >Dinamikusan generált táblázat. Reload gombon valós http call dörren.
       Default gombra kattintva statikus adatokat láthatunk.</span
-    >
-  </div>
-
-  <br />
-  <br />
-  <mat-card style="padding: 10px">
-    <div style="gap: 5%; display: flex">
-      <button mat-raised-button (click)="loadDefaults()">Default</button>
-      <button mat-raised-button color="primary" (click)="reloadFromService()">
-        Reload
-      </button>
-
-      <button
-        mat-raised-button
-        color="accent"
-        [disabled]="!selection.hasValue()"
-        (click)="openDialog(selection.selected)"
       >
-        Update
-      </button>
     </div>
-  </mat-card>
-  <br />
-  <mat-accordion class="example-headers-align" multi>
-    <!-- Users json -->
-    <mat-expansion-panel [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title> Filter </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="row" style="display: flex; gap: 3%">
-        <mat-form-field appearance="outline" [style.width.%]="100">
-          <mat-label>Search</mat-label>
-          <input
-            matInput
-            (keyup)="searchInputChange($event)"
-            [(ngModel)]="searchValue"
-          />
-          <mat-icon matSuffix>search</mat-icon>
-          <!-- <mat-hint>Hint</mat-hint> -->
-        </mat-form-field>
 
-        <mat-form-field appearance="outline" [style.width.%]="100">
-          <mat-label>Enter a date range</mat-label>
-          <mat-date-range-input [rangePicker]="rangePicker">
-            <input matStartDate placeholder="Start date" />
-            <input matEndDate placeholder="End date" />
-          </mat-date-range-input>
-          <!-- <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint> -->
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="rangePicker"
-          ></mat-datepicker-toggle>
-          <mat-date-range-picker #rangePicker>
-            <mat-date-range-picker-actions>
-              <button mat-button matDateRangePickerCancel>Cancel</button>
-              <button mat-raised-button color="primary" matDateRangePickerApply>
-                Apply
-              </button>
-            </mat-date-range-picker-actions>
-          </mat-date-range-picker>
-        </mat-form-field>
-      </div>
-    </mat-expansion-panel>
-  </mat-accordion>
-  <br />
-  <div>
-    <mat-table
-      *ngIf="displayedColumns"
-      matSort
-      [dataSource]="dataSource"
-      (matSortChange)="announceSortChange($event)"
-      class="mat-elevation-z10 demo-table"
-    >
-      <ng-scrollbar #scrollable track="all" pointerEventsMethod="scrollbar">
-        <!-- Selection Definition -->
-        <ng-container matColumnDef="select">
-          <mat-header-cell *matHeaderCellDef>
-            <span *ngIf="allowMultiSelect"></span>
-            <mat-checkbox
-              *ngIf="allowMultiSelect"
-              (change)="$event ? toggleAllRows() : null"
-              [checked]="selection.hasValue() && isAllSelected()"
-              [indeterminate]="selection.hasValue() && !isAllSelected()"
-            >
-            </mat-checkbox>
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <mat-checkbox
-              (click)="$event.stopPropagation(); onSelectionChange(row)"
-              [checked]="selection.isSelected(row)"
-            >
-            </mat-checkbox>
-          </mat-cell>
-        </ng-container>
+    <br />
+    <br />
+    <mat-card style="padding: 10px">
+      <div style="gap: 5%; display: flex">
+        <button mat-raised-button (click)="loadDefaults()">Default</button>
+        <button mat-raised-button color="primary" (click)="reloadFromService()">
+          Reload
+        </button>
 
-        <!-- Dynamic Definitions -->
-        <ng-container
-          *ngFor="let column of displayedColumns?.display; let index"
-          [matColumnDef]="column.name"
-        >
-          <mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header
-            sortActionDescription="Sort by"
+        <button
+          mat-raised-button
+          color="accent"
+          [disabled]="!selection.hasValue()"
+          (click)="openDialog(selection.selected)"
           >
-            {{ column.header }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row[column.name] }} </mat-cell>
-        </ng-container>
+          Update
+        </button>
+      </div>
+    </mat-card>
+    <br />
+    <mat-accordion class="example-headers-align" multi>
+      <!-- Users json -->
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title> Filter </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row" style="display: flex; gap: 3%">
+          <mat-form-field appearance="outline" [style.width.%]="100">
+            <mat-label>Search</mat-label>
+            <input
+              matInput
+              (keyup)="searchInputChange($event)"
+              [(ngModel)]="searchValue"
+              />
+            <mat-icon matSuffix>search</mat-icon>
+            <!-- <mat-hint>Hint</mat-hint> -->
+          </mat-form-field>
 
-        <!-- Action Definition -->
-        <ng-container matColumnDef="action">
-          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <button mat-icon-button [matMenuTriggerFor]="menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="openDialog(selection.selected)">
-                Módosítás
-              </button>
-              <button mat-menu-item (click)="removeHandler(selection.selected)">
-                Törlés
-              </button>
-            </mat-menu>
-          </mat-cell>
-        </ng-container>
-
-        <!-- Header and Row Declarations -->
-        <mat-header-row
-          *matHeaderRowDef="displayedColumns?.columns"
-        ></mat-header-row>
-        <mat-row
-          matRipple
-          (click)="$event.stopPropagation(); onRowChange(row)"
-          [class.demo-row-is-clicked]="clickedRows.has(row)"
-          *matRowDef="let row; columns: displayedColumns?.columns"
-        ></mat-row>
-
-        <div
-          style="padding: 25px; text-align: center"
-          class="no-data-row"
-          *matNoDataRow
-        >
-          <!--         <mat-cell *matCellDef> No data matching the filter </mat-cell>
- -->
-          <span>Nothing to display.</span>
+          <mat-form-field appearance="outline" [style.width.%]="100">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="rangePicker">
+              <input matStartDate placeholder="Start date" />
+              <input matEndDate placeholder="End date" />
+            </mat-date-range-input>
+            <!-- <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint> -->
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="rangePicker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #rangePicker>
+              <mat-date-range-picker-actions>
+                <button mat-button matDateRangePickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDateRangePickerApply>
+                  Apply
+                </button>
+              </mat-date-range-picker-actions>
+            </mat-date-range-picker>
+          </mat-form-field>
         </div>
-      </ng-scrollbar>
-    </mat-table>
-    <mat-paginator
-      class="mat-elevation-z10"
-      [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-      aria-label="Select page of periodic elements"
-    >
-    </mat-paginator>
-  </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <br />
+    <div>
+      @if (displayedColumns) {
+        <mat-table
+          matSort
+          [dataSource]="dataSource"
+          (matSortChange)="announceSortChange($event)"
+          class="mat-elevation-z10 demo-table"
+          >
+          <ng-scrollbar #scrollable track="all" pointerEventsMethod="scrollbar">
+            <!-- Selection Definition -->
+            <ng-container matColumnDef="select">
+              <mat-header-cell *matHeaderCellDef>
+                @if (allowMultiSelect) {
+                  <span></span>
+                }
+                @if (allowMultiSelect) {
+                  <mat-checkbox
+                    (change)="$event ? toggleAllRows() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    >
+                  </mat-checkbox>
+                }
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <mat-checkbox
+                  (click)="$event.stopPropagation(); onSelectionChange(row)"
+                  [checked]="selection.isSelected(row)"
+                  >
+                </mat-checkbox>
+              </mat-cell>
+            </ng-container>
+            <!-- Dynamic Definitions -->
+            @for (column of displayedColumns?.display; track column) {
+              <ng-container
+                [matColumnDef]="column.name"
+                >
+                <mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                  sortActionDescription="Sort by"
+                  >
+                  {{ column.header }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row[column.name] }} </mat-cell>
+              </ng-container>
+            }
+            <!-- Action Definition -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="openDialog(selection.selected)">
+                    Módosítás
+                  </button>
+                  <button mat-menu-item (click)="removeHandler(selection.selected)">
+                    Törlés
+                  </button>
+                </mat-menu>
+              </mat-cell>
+            </ng-container>
+            <!-- Header and Row Declarations -->
+            <mat-header-row
+              *matHeaderRowDef="displayedColumns?.columns"
+            ></mat-header-row>
+            <mat-row
+              matRipple
+              (click)="$event.stopPropagation(); onRowChange(row)"
+              [class.demo-row-is-clicked]="clickedRows.has(row)"
+              *matRowDef="let row; columns: displayedColumns?.columns"
+            ></mat-row>
+            <div
+              style="padding: 25px; text-align: center"
+              class="no-data-row"
+              *matNoDataRow
+              >
+              <!--         <mat-cell *matCellDef> No data matching the filter </mat-cell>
+              -->
+              <span>Nothing to display.</span>
+            </div>
+          </ng-scrollbar>
+        </mat-table>
+      }
+      <mat-paginator
+        class="mat-elevation-z10"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements"
+        >
+      </mat-paginator>
+    </div>
 
-  <br />
-  <br />
-  <!--   <div>
+    <br />
+    <br />
+    <!--   <div>
     <h3>Current selection</h3>
     <span *ngIf="selection.selected.length">{{
       selection.selected | json
@@ -174,77 +175,82 @@
 
   <!-- cdk table not displayed -->
   <div *ngif class="mat-elevation-z8" style="padding: 5px">
-    <table *ngIf="displayedColumns" mat-table matSort [dataSource]="dataSource">
-      <!-- Selection Column -->
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <span *ngIf="allowMultiSelect"></span>
-          <mat-checkbox
-            *ngIf="allowMultiSelect"
-            (change)="$event ? toggleAllRows() : null"
-            [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()"
-          >
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let element">
-          <mat-checkbox
-            (click)="$event.stopPropagation(); onSelectionChange(element)"
-            (change)="$event ? selection.toggle(element) : null"
-            [checked]="selection.isSelected(element)"
-          >
-          </mat-checkbox>
-        </td>
-      </ng-container>
-
-      <!-- Dynamic Columns -->
-      <ng-container
-        *ngFor="let column of displayedColumns?.display; let index"
-        [matColumnDef]="column.name"
-      >
-        <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element[column.name] }}
-        </td>
-      </ng-container>
-
-      <!-- Actions Column -->
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button (click)="openDialog(element)">Edit</button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns?.columns"></tr>
-
-      <tr
-        mat-row
-        (click)="clickedRows.add(row)"
-        [class.demo-row-is-clicked]="clickedRows.has(row)"
-        *matRowDef="let row; columns: displayedColumns?.columns"
-      ></tr>
-
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="5">No data matching the filter"</td>
-      </tr>
-    </table>
+    @if (displayedColumns) {
+      <table mat-table matSort [dataSource]="dataSource">
+        <!-- Selection Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            @if (allowMultiSelect) {
+              <span></span>
+            }
+            @if (allowMultiSelect) {
+              <mat-checkbox
+                (change)="$event ? toggleAllRows() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                >
+              </mat-checkbox>
+            }
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox
+              (click)="$event.stopPropagation(); onSelectionChange(element)"
+              (change)="$event ? selection.toggle(element) : null"
+              [checked]="selection.isSelected(element)"
+              >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+        <!-- Dynamic Columns -->
+        @for (column of displayedColumns?.display; track column) {
+          <ng-container
+            [matColumnDef]="column.name"
+            >
+            <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element[column.name] }}
+            </td>
+          </ng-container>
+        }
+        <!-- Actions Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="openDialog(element)">Edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns?.columns"></tr>
+        <tr
+          mat-row
+          (click)="clickedRows.add(row)"
+          [class.demo-row-is-clicked]="clickedRows.has(row)"
+          *matRowDef="let row; columns: displayedColumns?.columns"
+        ></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="5">No data matching the filter"</td>
+        </tr>
+      </table>
+    }
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons
       aria-label="Select page of periodic elements"
-    >
+      >
     </mat-paginator>
     <div>
       <h3>Click Log</h3>
     </div>
 
-    <div *ngIf="!clickedRows.size">Clicked rows will be logged here</div>
+    @if (!clickedRows.size) {
+      <div>Clicked rows will be logged here</div>
+    }
 
     <ul>
-      <li *ngFor="let clickedRow of clickedRows">
-        Clicked on {{ clickedRow | json }}
-      </li>
+      @for (clickedRow of clickedRows; track clickedRow) {
+        <li>
+          Clicked on {{ clickedRow | json }}
+        </li>
+      }
     </ul>
   </div>
 </div>
@@ -253,5 +259,5 @@
 
 <!--
 
-  mattable
+mattable
 -->

@@ -1,33 +1,38 @@
-<div class="ang23-dialog" *ngIf="form" style="min-width: 400px">
-  <h1 style="">Dynamic Edit form</h1>
-  <span style="">Dinamikusan generált form.</span>
-  <br />
-  <br />
-
-  <form [formGroup]="form">
-    <div *ngFor="let question of questions" class="form-row">
-      <ang23-dynamic-form-field
-        [question]="question"
-        [form]="form"
-      ></ang23-dynamic-form-field>
-    </div>
-
-    <div class="form-row" style="gap: 5%; display: flex">
-      <button
-        mat-raised-button
-        (click)="onSubmit()"
-        color="primary"
-        [disabled]="!form.valid"
-      >
-        Save
-      </button>
-      <button mat-raised-button color="accent" (click)="onCancel()">
-        Cancel
-      </button>
-    </div>
-  </form>
-  <br />
-  <div *ngIf="payLoad" class="form-row">
-    <strong>Saved the following values</strong><br />{{ payLoad }}
+@if (form) {
+  <div class="ang23-dialog" style="min-width: 400px">
+    <h1 style="">Dynamic Edit form</h1>
+    <span style="">Dinamikusan generált form.</span>
+    <br />
+    <br />
+    <form [formGroup]="form">
+      @for (question of questions; track question) {
+        <div class="form-row">
+          <ang23-dynamic-form-field
+            [question]="question"
+            [form]="form"
+          ></ang23-dynamic-form-field>
+        </div>
+      }
+      <div class="form-row" style="gap: 5%; display: flex">
+        <button
+          mat-raised-button
+          type="button"
+          (click)="onSubmit()"
+          color="primary"
+          [disabled]="!form.valid"
+          >
+          Save
+        </button>
+        <button mat-raised-button type="button" color="accent" (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+    <br />
+    @if (payLoad) {
+      <div class="form-row">
+        <strong>Saved the following values</strong><br />{{ payLoad }}
+      </div>
+    }
   </div>
-</div>
+}

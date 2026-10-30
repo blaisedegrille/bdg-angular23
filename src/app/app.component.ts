@@ -1,43 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component } from '@angular/core';
+import { MatDrawer, MatDrawerMode } from '@angular/material/sidenav';
 import { Menu } from './models/menu';
-import { Mode } from './shared/mode-toggle/mode-toggle.model';
-import { ModeToggleService } from './shared/mode-toggle/mode-toggle.service';
 
 @Component({
+  standalone: false,
   selector: 'ang23-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
-  darkmode = true;
-  title = 'bdq-ang23';
-  showFiller = false;
+export class AppComponent {
+  title = 'BDG Angular';
+  drawerMode: MatDrawerMode = 'side';
+  isMobileViewport = false;
   componentList: Menu[] = [
-    { name: 'Home', route: 'home' },
-    { name: 'Dynamic Table', route: 'dynamic-grid' },
-    { name: 'Dashboard', route: 'dashboard' },
-    { name: 'Editor', route: 'editor' },
-    { name: 'Something', route: 'something' },
-    /*     { name: 'Maintenance', route: 'maintenance' },
-    { name: 'DataTable', route: 'datatable' },
-    { name: 'User', route: 'user' },
-    { name: 'Settings', route: 'settings' }, */
+    { name: 'Home', route: 'home', icon: 'home' },
+    { name: 'Dynamic table', route: 'dynamic-grid', icon: 'table_chart' },
+    { name: 'Dashboard', route: 'dashboard', icon: 'space_dashboard' },
+    { name: 'Editor', route: 'editor', icon: 'edit_note' },
+    { name: 'Maintenance', route: 'maintenance', icon: 'build' },
+    { name: 'Data table', route: 'datatable', icon: 'table_rows' },
+    { name: 'Users', route: 'user', icon: 'group' },
+    { name: 'Settings', route: 'settings', icon: 'settings' },
   ];
 
-  // currentMode: Mode = Mode.LIGHT;
-  constructor(private modeToggleService: ModeToggleService) {
-    /**
-     * Example code that demonstrate the modeChanged$ observable behavior and usage
-     */
-    /*     this.modeToggleService.modeChanged$.subscribe((mode: Mode) => {
-      this.currentMode = mode;
-    }); */
+  constructor(breakpointObserver: BreakpointObserver) {
+    breakpointObserver
+      .observe('(max-width: 760px)')
+      .subscribe(({ matches }) => {
+        this.isMobileViewport = matches;
+        this.drawerMode = matches ? 'over' : 'side';
+      });
   }
 
-  ngOnInit(): void {}
-
-  openGithubRepo() {
-    const url = 'https://github.com/blaisedegrille/angular-2023';
-    window.open(url, '_blank');
+  closeDrawerOnMobile(drawer: MatDrawer): void {
+    if (this.isMobileViewport) {
+      drawer.close();
+    }
   }
 }
